@@ -1,2 +1,3 @@
-2026/07/28-21:27:11.646 69d Creating DB /home/runner/workspace/auth_info/session/Default/shared_proto_db since it was missing.
-2026/07/28-21:27:11.661 69d Reusing MANIFEST /home/runner/workspace/auth_info/session/Default/shared_proto_db/MANIFEST-000001
+2026/07/28-21:37:36.215 baf Reusing MANIFEST /home/runner/workspace/auth_info/session/Default/shared_proto_db/MANIFEST-000001
+2026/07/28-21:37:36.215 baf Recovering log #3
+2026/07/28-21:37:36.222 baf Reusing old log /home/runner/workspace/auth_info/session/Default/shared_proto_db/000003.log 

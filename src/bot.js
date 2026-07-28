@@ -6,7 +6,6 @@
  * and notifies the owner via a private WhatsApp DM.
  */
 const { Client, LocalAuth } = require('whatsapp-web.js');
-const qrcode = require('qrcode-terminal');
 
 const { analyzeMessage }  = require('./ai');
 const { downloadCV }      = require('./drive');
@@ -148,13 +147,22 @@ async function startBot() {
     }
   });
 
-  // ── QR code ─────────────────────────────────────────────────────────────────
-  client.on('qr', (qr) => {
-    console.log('\n══════════════════════════════════════════════════');
-    console.log('  Scan this QR code with your WhatsApp:');
-    console.log('══════════════════════════════════════════════════\n');
-    qrcode.generate(qr, { small: true });
-    console.log('\nWhatsApp → Linked Devices → Link a Device → Scan QR\n');
+  // ── Pairing code ─────────────────────────────────────────────────────────────
+  client.on('qr', async () => {
+    const number = (process.env.BOT_PHONE_NUMBER || '').replace(/\D/g, '');
+    if (!number) {
+      console.log('❌ BOT_PHONE_NUMBER is not set — cannot request pairing code');
+      return;
+    }
+    try {
+      const code = await client.requestPairingCode(number);
+      console.log('\n══════════════════════════════════════════════════');
+      console.log(`  PAIRING CODE: ${code}`);
+      console.log('══════════════════════════════════════════════════');
+      console.log('WhatsApp → Linked Devices → Link a Device → Link with phone number\n');
+    } catch (err) {
+      console.error('Pairing code error:', err.message);
+    }
   });
 
   // ── Ready ────────────────────────────────────────────────────────────────────

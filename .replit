@@ -6,7 +6,7 @@ channel = "stable-25_05"
 
 [userenv.shared]
 AUTH_FOLDER = "./auth_info"
-BOT_PHONE_NUMBER = "2348053983988"
+BOT_PHONE_NUMBER = "2348150909008"
 FROM_NAME = "Aliu Johnson Temitope"
 GROQ_MODEL = "llama-3.3-70b-versatile"
 LOG_SHEET_TAB = "Applications"

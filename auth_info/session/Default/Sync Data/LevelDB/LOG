@@ -1,2 +1,3 @@
-2026/07/28-21:27:10.402 69d Creating DB /home/runner/workspace/auth_info/session/Default/Sync Data/LevelDB since it was missing.
-2026/07/28-21:27:10.571 69d Reusing MANIFEST /home/runner/workspace/auth_info/session/Default/Sync Data/LevelDB/MANIFEST-000001
+2026/07/28-21:37:35.863 baf Reusing MANIFEST /home/runner/workspace/auth_info/session/Default/Sync Data/LevelDB/MANIFEST-000001
+2026/07/28-21:37:35.868 baf Recovering log #3
+2026/07/28-21:37:35.868 baf Reusing old log /home/runner/workspace/auth_info/session/Default/Sync Data/LevelDB/000003.log 
