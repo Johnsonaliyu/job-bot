@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# Environment — never commit real secrets
+.env
+
+# Replit internals
+.cache/
+.local/
+.replit
+replit.nix
+zipFile.zip
+attached_assets/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# auth_info/ is intentionally NOT ignored — session files are committed
+# so the bot does not need to re-pair when deployed elsewhere.
+# ⚠️  Keep this repository PRIVATE to protect your WhatsApp session.
