@@ -147,8 +147,12 @@ async function startBot() {
     }
   });
 
-  // ── Pairing code ─────────────────────────────────────────────────────────────
+  // ── Pairing code (requested only once) ───────────────────────────────────────
+  let pairingRequested = false;
   client.on('qr', async () => {
+    if (pairingRequested) return;   // ignore subsequent qr refreshes
+    pairingRequested = true;
+
     const number = (process.env.BOT_PHONE_NUMBER || '').replace(/\D/g, '');
     if (!number) {
       console.log('❌ BOT_PHONE_NUMBER is not set — cannot request pairing code');
@@ -159,7 +163,8 @@ async function startBot() {
       console.log('\n══════════════════════════════════════════════════');
       console.log(`  PAIRING CODE: ${code}`);
       console.log('══════════════════════════════════════════════════');
-      console.log('WhatsApp → Linked Devices → Link a Device → Link with phone number\n');
+      console.log('Enter this in WhatsApp → Linked Devices → Link a Device → Link with phone number');
+      console.log('(Code is valid for ~60 seconds)\n');
     } catch (err) {
       console.error('Pairing code error:', err.message);
     }

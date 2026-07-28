@@ -1,3 +1,3 @@
-2026/07/28-21:37:35.883 bc8 Reusing MANIFEST /home/runner/workspace/auth_info/session/Default/Local Storage/leveldb/MANIFEST-000001
-2026/07/28-21:37:35.914 bc8 Recovering log #3
-2026/07/28-21:37:35.927 bc8 Reusing old log /home/runner/workspace/auth_info/session/Default/Local Storage/leveldb/000003.log 
+2026/07/28-21:42:24.431 cf7 Reusing MANIFEST /home/runner/workspace/auth_info/session/Default/Local Storage/leveldb/MANIFEST-000001
+2026/07/28-21:42:24.437 cf7 Recovering log #3
+2026/07/28-21:42:24.437 cf7 Reusing old log /home/runner/workspace/auth_info/session/Default/Local Storage/leveldb/000003.log 
