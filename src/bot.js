@@ -6,6 +6,36 @@
  * and notifies the owner via a private WhatsApp DM.
  */
 const { Client, LocalAuth } = require('whatsapp-web.js');
+const { execSync } = require('child_process');
+const fs = require('fs');
+
+// Resolve Chromium path across environments (Replit, Railway, Ubuntu, etc.)
+function findChromium() {
+  // 1. Explicit env var override — set this on Railway/Deployzy if needed
+  if (process.env.CHROMIUM_PATH && fs.existsSync(process.env.CHROMIUM_PATH)) {
+    return process.env.CHROMIUM_PATH;
+  }
+  // 2. Common fixed paths
+  const candidates = [
+    '/usr/bin/chromium',
+    '/usr/bin/chromium-browser',
+    '/usr/bin/google-chrome',
+    '/usr/bin/google-chrome-stable',
+    '/snap/bin/chromium'
+  ];
+  for (const p of candidates) {
+    if (fs.existsSync(p)) return p;
+  }
+  // 3. PATH lookup
+  for (const cmd of ['chromium', 'chromium-browser', 'google-chrome']) {
+    try {
+      const p = execSync(`which ${cmd}`, { stdio: ['pipe', 'pipe', 'ignore'] }).toString().trim();
+      if (p && fs.existsSync(p)) return p;
+    } catch {}
+  }
+  // 4. No system Chromium found — let puppeteer use its bundled binary
+  return undefined;
+}
 
 const { analyzeMessage }  = require('./ai');
 const { downloadCV }      = require('./drive');
@@ -136,7 +166,7 @@ async function startBot() {
   const client = new Client({
     authStrategy: new LocalAuth({ dataPath: authDir }),
     puppeteer: {
-      executablePath: '/nix/store/qa9cnw4v5xkxyip6mb9kxqfq1z4x2dx1-chromium-138.0.7204.100/bin/chromium',
+      ...(findChromium() ? { executablePath: findChromium() } : {}),
       headless: true,
       args: [
         '--no-sandbox',
