@@ -159,9 +159,31 @@ async function processMessage(client, msg, text, groupName) {
   console.log(`✅ Applied → ${email} (${jobTitle})`);
 }
 
+// Remove Chromium profile lock files left by a previous run on another machine
+function clearProfileLocks(authDir) {
+  const locks = [
+    'SingletonLock',
+    'SingletonSocket',
+    'SingletonCookie'
+  ];
+  const sessionDir = require('path').join(authDir, 'session');
+  for (const lock of locks) {
+    const lockPath = require('path').join(sessionDir, lock);
+    try {
+      if (fs.existsSync(lockPath)) {
+        fs.unlinkSync(lockPath);
+        console.log(`🔓 Removed lock file: ${lock}`);
+      }
+    } catch (err) {
+      console.warn(`Could not remove ${lock}: ${err.message}`);
+    }
+  }
+}
+
 // ── Bot startup ───────────────────────────────────────────────────────────────
 async function startBot() {
   const authDir = process.env.AUTH_FOLDER || './auth_info';
+  clearProfileLocks(authDir);
 
   const client = new Client({
     authStrategy: new LocalAuth({ dataPath: authDir }),
